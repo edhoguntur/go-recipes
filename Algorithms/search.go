@@ -22,5 +22,4 @@ func BinarySearch(arr []int, x int) int {
 func main() {
 	items := []int{2, 1, 3, 4, 5, 6, 7, 8}
 	fmt.Println(BinarySearch(items, 1))
-
 }
