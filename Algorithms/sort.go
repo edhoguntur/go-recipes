@@ -5,8 +5,8 @@ import (
 	"math"
 )
 
-// Time Complexity 0(n^2)
-// Space Complexity 0(1)
+// Time Complexity O(n^2)
+// Space Complexity O(1)
 
 func BubbleSort(arr []int) []int {
 	length := len(arr)
@@ -24,8 +24,8 @@ func BubbleSort(arr []int) []int {
 	return items
 }
 
-// Time Complexity 0(n+k)
-// Space Complexity 0(k)
+// Time Complexity O(n+k)
+// Space Complexity O(k)
 
 func CountingSort(arr []int) []int {
 	length := len(arr)
@@ -62,8 +62,8 @@ func CountingSort(arr []int) []int {
 	return items
 }
 
-// Time Complexity 0(n log(n))
-// Space Complexity 0(n)
+// Time Complexity O(n log(n))
+// Space Complexity O(n)
 
 func MergeSort(arr []int) []int {
 	items := make([]int, len(arr))
@@ -112,6 +112,44 @@ func Merge(left []int, right []int, result []int) {
 	copy(result[i:i+length], right[r:])
 }
 
+// Time Complexity from O(n log(n)) to O(n^2)
+// Space Complexity O(log(n))
+
+func DoSort(items []int, first int, last int) {
+	if first >= last {
+		return
+	}
+	i := first
+	j := last
+	x := items[(first+last)/2]
+
+	for i < j {
+		for items[i] < x {
+			i++
+		}
+		for items[j] > x {
+			j--
+		}
+		if i <= j {
+			var tmp = items[i]
+			items[i] = items[j]
+			items[j] = tmp
+			i++
+			j--
+		}
+	}
+	DoSort(items, first, j)
+	DoSort(items, i, last)
+}
+
+func QuickSort(arr []int) []int {
+	length := len(arr)
+	items := make([]int, length)
+	copy(items, arr)
+	DoSort(items, 0, length-1)
+	return items
+}
+
 func main() {
 	items := []int{2, 6, 4, 5, 7, 1, 2}
 	sortItems := BubbleSort(items)
@@ -123,5 +161,8 @@ func main() {
 	fmt.Println(sortItems)
 
 	sortItems = MergeSort(items)
+	fmt.Println(sortItems)
+
+	sortItems = QuickSort(items)
 	fmt.Println(sortItems)
 }
